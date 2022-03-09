@@ -11,8 +11,9 @@ import (
 )
 
 func createRandomAccount(t *testing.T) Account {
+	user := createRandomUser(t)
 	arg := CreateAccountParams{
-		Owner:    util.RandomOwner(),
+		Owner:    user.Username,
 		Balance:  util.RandomMoney(),
 		Currency: util.RandomCurrency(),
 	}
@@ -40,6 +41,7 @@ func TestGetAccount(t *testing.T) {
 	account2, err := testQueries.GetAccount(context.Background(), account1.ID)
 
 	require.NoError(t, err)
+	require.NotEmpty(t, account1)
 	require.NotEmpty(t, account2)
 
 	require.Equal(t, account1.ID, account2.ID)
